@@ -303,7 +303,7 @@ class TfPoseEstimator:
             for i in range(common.CocoPart.Background.value):
                 if i not in human.body_parts.keys() or i > 13:
                     continue
-
+                print(human.body_parts[i])
                 body_part = human.body_parts[i]
                 center = (int(body_part.x * image_w + 0.5), int(body_part.y * image_h + 0.5))
                 centers[i] = center
