@@ -26,6 +26,8 @@ config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 joint_dist = [[0 for i in range(19)] for j in range(12)] # distance array values setup
 joint_pointX = [[1 for i in range(19)] for j in range(12)] # for return value of axisX
 joint_pointY = [[1 for i in range(19)] for j in range(12)] # for return value of axisY
+joint_tempX = [[1 for i in range(19)] for j in range(12)] # for return value of axisX
+joint_tempY = [[1 for i in range(19)] for j in range(12)] # for return value of axisY
 joint_depth_array_temp = [[0 for i in range(19)] for j in range(12)]
 frame_add = 0
 angle_filter = [[[0 for i in range(10)] for j in range(10)] for l in range(12)]
@@ -69,7 +71,7 @@ def Angle_main_calculator(x1,y1,z1,x2,y2,z2):
 
 # depth data calling
 def multiple_depth_data(tempX,tempY,i,humans,depth_data_array,image_rgb,depth_scale):
-    for j in range(0,14):
+    for j in range(0,19):
         if humans[i] != None: 
             if tempX[i][j] != 1 and tempY[i][j] != 1: # not int(1), axis X, Y
                 temp = []
@@ -269,7 +271,7 @@ def Angle_calculator(joint_pointX,joint_pointY,joint_dist, angle_filter,angle_fi
     return angle_filter,angle_filter_count
 
 def Deprojections(tempX, tempY, tempZ,i,humans, depth_intrin, depth_scale):
-    for j in range(0, 14):
+    for j in range(0, 19):
         if humans[i] != None:
             temp = [1 for i in range(2)]  # for return value of axisY
             if tempX[i][j] != 1 and tempY[i][j] != 1 and tempZ[i][j] != 1:  # not int(1), axis X, Y
@@ -375,19 +377,32 @@ if __name__ == '__main__':
         # LHip = 11
         # LKnee = 12
         # LAnkle = 13
-        # Wrist = 18
+        # pubis = 18
 
 
-            joint_pointX, joint_pointY = TfPoseEstimator.joint_pointer(image_rgb,humans,imgcopy=False)
+            joint_tempX, joint_tempY = TfPoseEstimator.joint_pointer(image_rgb,humans,imgcopy=False)
+
+
             if len(humans) > 0 :
+                for i in range(0,len(humans)):
+                    for j in range(0,19):
+                        if joint_tempX[i][j] == 1 and joint_tempY[i][j] == 1:
+                            joint_pointX[i][j] = joint_tempX[i][j]
+                            joint_pointY[i][j] = joint_tempY[i][j]
+                        elif joint_pointX[i][j] == 1 and joint_pointY[i][j] == 1:
+                            joint_pointX[i][j] = joint_tempX[i][j]
+                            joint_pointY[i][j] = joint_tempY[i][j]
+                        else:
+                            joint_pointX[i][j] = int(joint_pointX[i][j] * 0.9 + joint_tempX[i][j] * 0.1)
+                            joint_pointY[i][j] = int(joint_pointY[i][j] * 0.9 + joint_tempY[i][j] * 0.1)
+
                 for i in range(0,len(humans)):
 
                     joint_dist,image_rgb = multiple_depth_data(joint_pointX,joint_pointY,i,humans,depth_data_array,image_rgb,depth_scale)
-
                     point3dX, point3dY, point3dZ = Deprojections(joint_pointX, joint_pointY, joint_dist, i, humans, depth_intrin, depth_scale)
-
+                    print(point3dZ[i][18])
                     length =round(math.sqrt(math.pow(point3dX[i][0] - point3dX[i][1],2) + math.pow(point3dY[i][0] - point3dY[i][1],2) + math.pow(point3dZ[i][0] - point3dZ[i][1],2)), 4)
-                    print(length)
+                    #print(length)
 
                     #angle_filter,angle_filter_count = Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter,angle_filter_count,humans,i)
                     angle_filter, angle_filter_count = Angle_calculator(point3dX, point3dY, point3dZ,angle_filter, angle_filter_count, humans, i)
@@ -409,16 +424,16 @@ if __name__ == '__main__':
                     cv2.putText(image_rgb, str(point3dZ[i][2]), (joint_pointX[i][2] - 5, joint_pointY[i][2] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
                     cv2.putText(image_rgb, str(point3dZ[i][3]), (joint_pointX[i][3] - 5, joint_pointY[i][3] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
                     cv2.putText(image_rgb, str(point3dZ[i][4]), (joint_pointX[i][4] - 5, joint_pointY[i][4] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-                    cv2.putText(image_rgb, str(point3dZ[i][5]), (joint_pointX[i][5] - 5, joint_pointY[i][4] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-                    cv2.putText(image_rgb, str(point3dZ[i][6]), (joint_pointX[i][6] - 5, joint_pointY[i][4] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-                    cv2.putText(image_rgb, str(point3dZ[i][7]), (joint_pointX[i][7] - 5, joint_pointY[i][4] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-                    cv2.putText(image_rgb, str(point3dZ[i][8]), (joint_pointX[i][8] - 5, joint_pointY[i][4] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-                    cv2.putText(image_rgb, str(point3dZ[i][9]), (joint_pointX[i][9] - 5, joint_pointY[i][4] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-                    cv2.putText(image_rgb, str(point3dZ[i][10]), (joint_pointX[i][10] - 5, joint_pointY[i][4] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-                    cv2.putText(image_rgb, str(point3dZ[i][11]), (joint_pointX[i][4] - 5, joint_pointY[i][4] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-                    cv2.putText(image_rgb, str(point3dZ[i][12]), (joint_pointX[i][4] - 5, joint_pointY[i][4] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-                    cv2.putText(image_rgb, str(point3dZ[i][13]), (joint_pointX[i][4] - 5, joint_pointY[i][4] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-                    cv2.putText(image_rgb, str(point3dZ[i][14]), (joint_pointX[i][4] - 5, joint_pointY[i][4] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+                    cv2.putText(image_rgb, str(point3dZ[i][5]), (joint_pointX[i][5] - 5, joint_pointY[i][5] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+                    cv2.putText(image_rgb, str(point3dZ[i][6]), (joint_pointX[i][6] - 5, joint_pointY[i][6] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+                    cv2.putText(image_rgb, str(point3dZ[i][7]), (joint_pointX[i][7] - 5, joint_pointY[i][7] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+                    cv2.putText(image_rgb, str(point3dZ[i][8]), (joint_pointX[i][8] - 5, joint_pointY[i][8] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+                    cv2.putText(image_rgb, str(point3dZ[i][9]), (joint_pointX[i][9] - 5, joint_pointY[i][9] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+                    cv2.putText(image_rgb, str(point3dZ[i][10]), (joint_pointX[i][10] - 5, joint_pointY[i][10] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+                    cv2.putText(image_rgb, str(point3dZ[i][11]), (joint_pointX[i][11] - 5, joint_pointY[i][11] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+                    cv2.putText(image_rgb, str(point3dZ[i][12]), (joint_pointX[i][12] - 5, joint_pointY[i][12] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+                    cv2.putText(image_rgb, str(point3dZ[i][13]), (joint_pointX[i][13] - 5, joint_pointY[i][13] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+                    cv2.putText(image_rgb, str(point3dZ[i][18]), (joint_pointX[i][18] - 5, joint_pointY[i][18] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
                     # putText Angle
                     cv2.putText(image_rgb,str(getMedian(angle_filter[i][0])),(joint_pointX[i][1],joint_pointY[i][1]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
