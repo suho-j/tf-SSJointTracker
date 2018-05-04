@@ -26,9 +26,6 @@ config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 joint_dist = [[0 for i in range(19)] for j in range(12)] # distance array values setup
 joint_pointX = [[1 for i in range(19)] for j in range(12)] # for return value of axisX
 joint_pointY = [[1 for i in range(19)] for j in range(12)] # for return value of axisY
-joint_tempX = [[1 for i in range(19)] for j in range(12)] # for return value of axisX
-joint_tempY = [[1 for i in range(19)] for j in range(12)] # for return value of axisY
-joint_depth_array_temp = [[0 for i in range(19)] for j in range(12)]
 frame_add = 0
 angle_filter = [[[0 for i in range(10)] for j in range(10)] for l in range(12)]
 angle_filter_count=0
@@ -62,7 +59,7 @@ def getMedian(array):
         return int((array[a_len-1] + array[a_len-2])/2)   
         
 def Angle_main_calculator(x1,y1,z1,x2,y2,z2):
-    cal1 = ((x1*x2) + (y1*y2) + (z1*z2))
+    cal1 = (x1*x2 + y1*y2 + z1*z2)
     cal2 = math.sqrt(math.pow(x1, 2) + math.pow(y1, 2) + math.pow(z1, 2)) * math.sqrt(pow(x2, 2) + math.pow(y2, 2) + math.pow(z2, 2))
     #print("cal1: "+str(cal1)+" cal2: " + str(cal2))
     #print("x1:" + str(x1) + " y1:"+str(y1)+" z1"+str(z1)+" x2"+str(x2)+" y2"+str(y2)+" z2"+str(z2))
@@ -91,14 +88,14 @@ def multiple_depth_data(tempX,tempY,i,humans,depth_data_array,image_rgb,depth_sc
                         # debug print(int((depth_data_array[avgY][avgX]/80)*37.8)) # 1cm = 37.8 pixel
                 if temp:
                     temp.sort()
-                    joint_depth_array_temp[i][j] = int(getExact(temp))  #depth filtering
+                    joint_dist[i][j] = int(getExact(temp))  #depth filtering
             # debuging
             # if int(joint_depth_array_temp[i][j]) != 0:
                 # cv2.putText(image_rgb,str(int(joint_depth_array_temp[i][j])),(tempX[i][j],tempY[i][j]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
 
     
 
-    return joint_depth_array_temp,image_rgb
+    return joint_dist,image_rgb
 
 #def 2dTo3d()
 
@@ -210,13 +207,13 @@ def Angle_calculator(joint_pointX,joint_pointY,joint_dist, angle_filter,angle_fi
             angle_filter[i][5][angle_filter_count] = 0
 
         if joint_pointX[i][18] != 1 and joint_pointX[i][8] != 1 and joint_pointX[i][9] != 1 : # RHip 6, axis 8
-            x1=joint_pointX[i][18] - joint_pointX[i][8]
-            y1=joint_pointY[i][18] - joint_pointY[i][8]
-            x2=joint_pointX[i][9] - joint_pointX[i][8]
-            y2=joint_pointY[i][9] - joint_pointY[i][8]
+            x1=joint_pointX[i][9] - joint_pointX[i][8]
+            y1=joint_pointY[i][9] - joint_pointY[i][8]
+            x2=joint_pointX[i][18] - joint_pointX[i][8]
+            y2=joint_pointY[i][18] - joint_pointY[i][8]
             if joint_dist[i][18] != 0 and joint_dist[i][8] != 0 and joint_dist[i][9] != 0 :
-                z1=joint_dist[i][18] - joint_dist[i][8]
-                z2=joint_dist[i][9] - joint_dist[i][8]
+                z1=joint_dist[i][9] - joint_dist[i][8]
+                z2=joint_dist[i][18] - joint_dist[i][8]
             else :
                 z1,z2=0,0
             angle_filter[i][6][angle_filter_count] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
@@ -379,23 +376,8 @@ if __name__ == '__main__':
         # LAnkle = 13
         # pubis = 18
 
-
-            joint_tempX, joint_tempY = TfPoseEstimator.joint_pointer(image_rgb,humans,imgcopy=False)
-
-
+            joint_pointX, joint_pointY = TfPoseEstimator.joint_pointer(image_rgb,humans,imgcopy=False)
             if len(humans) > 0 :
-                for i in range(0,len(humans)):
-                    for j in range(0,19):
-                        if joint_tempX[i][j] == 1 and joint_tempY[i][j] == 1:
-                            joint_pointX[i][j] = joint_tempX[i][j]
-                            joint_pointY[i][j] = joint_tempY[i][j]
-                        elif joint_pointX[i][j] == 1 and joint_pointY[i][j] == 1:
-                            joint_pointX[i][j] = joint_tempX[i][j]
-                            joint_pointY[i][j] = joint_tempY[i][j]
-                        else:
-                            joint_pointX[i][j] = int(joint_pointX[i][j] * 0.9 + joint_tempX[i][j] * 0.1)
-                            joint_pointY[i][j] = int(joint_pointY[i][j] * 0.9 + joint_tempY[i][j] * 0.1)
-
                 for i in range(0,len(humans)):
 
                     joint_dist,image_rgb = multiple_depth_data(joint_pointX,joint_pointY,i,humans,depth_data_array,image_rgb,depth_scale)
@@ -404,16 +386,19 @@ if __name__ == '__main__':
                     length =round(math.sqrt(math.pow(point3dX[i][0] - point3dX[i][1],2) + math.pow(point3dY[i][0] - point3dY[i][1],2) + math.pow(point3dZ[i][0] - point3dZ[i][1],2)), 4)
                     #print(length)
 
+                    #length =round(math.sqrt(math.pow(point3dX[i][0] - point3dX[i][1],2) + math.pow(point3dY[i][0] - point3dY[i][1],2) + math.pow(point3dZ[i][0] - point3dZ[i][1],2)), 4)
+
+
                     #angle_filter,angle_filter_count = Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter,angle_filter_count,humans,i)
                     angle_filter, angle_filter_count = Angle_calculator(point3dX, point3dY, point3dZ,angle_filter, angle_filter_count, humans, i)
 
                     # write file - frame, x, y, z
                     #for j in range(0,19):
+
                     #data = "x:"+str(joint_pointX[i][j])+" y:"+str(joint_pointY[i][j])+" z:"+str(joint_dist[i][j])+"\n"
-                    data = "fps:" + str(frame_add) +"-"+ str(i)+" x:" + str(joint_pointX[i][0]) + " y:" + str(joint_pointY[i][0]) + " z:" + str(joint_dist[i][0]) + "\n"
                     #f.write(data)
 
-                    text = str(length) #+ "\nz1:"+ str(point3dZ[i][2]) + "\nz2"+str(point3dZ[i][5])
+                    #text = str(length) #+ "\nz1:"+ str(point3dZ[i][2]) + "\nz2"+str(point3dZ[i][5])
                     #print("x: ",point3dX[i][0], " y: ",point3dY[i][0], " z :", point3dZ[i][0])
                     #cv2.putText(image_rgb, text, (20,50), cv2.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255), 2)
                     #cv2.putText(image_rgb, text, (joint_pointX[i][0], joint_pointY[i][0]), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
