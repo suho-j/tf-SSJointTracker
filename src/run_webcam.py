@@ -307,7 +307,6 @@ if __name__ == '__main__':
     align_to  = rs.stream.color
     align = rs.align(align_to)
 
-    #f = open("D:\ho\바탕화면\\newfile.txt", 'w')
     while True:
 
         frames=pipeline.wait_for_frames()
@@ -333,7 +332,6 @@ if __name__ == '__main__':
 
         # array format is numpy.
         # save your image data. in numpyarray.
-        
 
         if args.zoom < 1.0:
             canvas = np.zeros_like(image_rgb)
@@ -372,29 +370,11 @@ if __name__ == '__main__':
             joint_pointX, joint_pointY = TfPoseEstimator.joint_pointer(image_rgb,humans,imgcopy=False)
             if len(humans) > 0 :
                 for i in range(0,len(humans)):
-
                     joint_dist,image_rgb = multiple_depth_data(joint_pointX,joint_pointY,i,humans,depth_data_array,image_rgb,depth_scale)
                     point3dX, point3dY, point3dZ = Deprojections(joint_pointX, joint_pointY, joint_dist, i, humans, depth_intrin, depth_scale)
-                    print(point3dZ[i][18])
-                    length =round(math.sqrt(math.pow(point3dX[i][0] - point3dX[i][1],2) + math.pow(point3dY[i][0] - point3dY[i][1],2) + math.pow(point3dZ[i][0] - point3dZ[i][1],2)), 4)
-                    #print(length)
-
-                    #length =round(math.sqrt(math.pow(point3dX[i][0] - point3dX[i][1],2) + math.pow(point3dY[i][0] - point3dY[i][1],2) + math.pow(point3dZ[i][0] - point3dZ[i][1],2)), 4)
-
 
                     #angle_filter,angle_filter_count = Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter,angle_filter_count,humans,i)
                     angle_filter = Angle_calculator(point3dX, point3dY, point3dZ,angle_filter, humans, i)
-
-                    # write file - frame, x, y, z
-                    #for j in range(0,19):
-
-                    #data = "x:"+str(joint_pointX[i][j])+" y:"+str(joint_pointY[i][j])+" z:"+str(joint_dist[i][j])+"\n"
-                    #f.write(data)
-
-                    #text = str(length) #+ "\nz1:"+ str(point3dZ[i][2]) + "\nz2"+str(point3dZ[i][5])
-                    #print("x: ",point3dX[i][0], " y: ",point3dY[i][0], " z :", point3dZ[i][0])
-                    #cv2.putText(image_rgb, text, (20,50), cv2.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255), 2)
-                    #cv2.putText(image_rgb, text, (joint_pointX[i][0], joint_pointY[i][0]), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
                     # putText Depth
                     cv2.putText(image_rgb, str(point3dZ[i][0]), (joint_pointX[i][0] - 5, joint_pointY[i][0] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5,(255, 255, 255), 2)
@@ -442,5 +422,4 @@ if __name__ == '__main__':
         frame_add += 1    
 
         print("-------")
-    #f.close()
     cv2.destroyAllWindows()
