@@ -22,7 +22,9 @@ config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 # config streaming values set your camera configure.
 # enable_stream(camera_module, resolution_w,resolution_h,pixel_format,frame)
 # frame was fixed values.  
-
+body_parts_count = [[0 for i in range(19)] for j in range(12)]
+humans_idx  = [1 for i in range(12)]
+centers = [[[0 for i in range(10)] for j in range(19)] for k in range(12)]
 joint_dist = [[0 for i in range(19)] for j in range(12)] # distance array values setup
 joint_pointX = [[1 for i in range(19)] for j in range(12)] # for return value of axisX
 joint_pointY = [[1 for i in range(19)] for j in range(12)] # for return value of axisY
@@ -33,6 +35,7 @@ coordinates=[[0 for i in range(19)]]
 point3dX = [[1 for i in range(19)] for j in range(12)] # for return value of axisX
 point3dY = [[1 for i in range(19)] for j in range(12)] # for return value of axisY
 point3dZ = [[0 for i in range(19)] for j in range(12)] # distance array values setup
+
 
 # get list exist value
 def getExact(array):
@@ -347,7 +350,7 @@ if __name__ == '__main__':
             dy = (img_scaled.shape[0] - image_rgb.shape[0]) // 2
             image1 = img_scaled[dy:image1.shape[0], dx:image_rgb.shape[1]]
         humans = e.inference(image_rgb)
-        image_rgb = TfPoseEstimator.draw_humans(image_rgb,humans,imgcopy=False)
+        image_rgb, humans_idx, centers, body_parts_count = TfPoseEstimator.draw_humans(image_rgb, humans, humans_idx, centers, body_parts_count, imgcopy=False, )
 
         if humans:
         # distance values call (humans list length = people).
