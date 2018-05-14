@@ -291,9 +291,14 @@ class TfPoseEstimator:
 
     def average_Center(centers, select, i):
         centers[select][i].sort()
+        tempX = 0
+        tempY = 0
+        center = {}
         for j in range(1, 9):
-            temp = temp + centers[select][i][j]
-        center = int(temp / 8)
+            tempX = tempX + centers[select][i][j][0]
+            tempY = tempY + centers[select][i][j][1]
+        center[0] = tempX / 8
+        center[1] = tempY / 8
         return center
 
     @staticmethod
@@ -305,15 +310,9 @@ class TfPoseEstimator:
         for human in humans:
             MAFCenters = [[0 for i in range(19)] for j in range(12)]
             human_idx_temp = human
-            select = -1
-            for i in range(1, 12):
-                if humans_idx[i] == human_idx_temp:
-                    select = i
-                elif humans_idx[i] == 1:
-                    humans_idx[i] = human_idx_temp
-                    select = i
-            if select == -1:
-                continue
+            print(human_idx_temp)
+            select = 1
+
             # draw point
             wrist_inference = (0,0)
             wrist_check = 0
@@ -333,13 +332,15 @@ class TfPoseEstimator:
                     centers[select][i][9] = center
                 if body_parts_count[select][i] == 10:
                     MAFCenters[select][i] = TfPoseEstimator.average_Center(centers, select, i)
-                    cv2.circle(npimg, MAFCenters[select][i], 1, (0,0,0), thickness=9, lineType=1, shift=0)
+                    temp = (MAFCenters[select][i][0], MAFCenters[select][i][1])
+                    cv2.circle(npimg, temp , 1, (0,0,0), thickness=9, lineType=1, shift=0)
 
                     if i == 8:
                         wrist_inference = MAFCenters[select][i]
 
                     if wrist_inference != (0,0) and i == 11:
                         wrist_inference = (int((wrist_inference[0] + MAFCenters[select][i][0]) / 2),int((wrist_inference[1] + MAFCenters[select][i][1]) / 2))
+
                         cv2.circle(npimg, wrist_inference, 1, (0,0,0), thickness=9, lineType=1, shift=0)
                         wrist_check = 1
                         MAFCenters[select][18] = wrist_inference
@@ -390,10 +391,16 @@ class TfPoseEstimator:
                 if pair[0] == 1 and pair[1] == 11:
                     continue
                 if wrist_check == 1 and (pair[0] == 1 or pair[0] == 8 or pair[0] == 11):
-                    npimg = cv2.line(npimg, MAFCenters[select][pair[0]], MAFCenters[select][18],(0,255,255), 3)
+                    temp0 = (MAFCenters[select][pair[0]][0],MAFCenters[select][pair[0]][1])
+                    temp1 = (MAFCenters[select][18][0], MAFCenters[select][18][1])
+                    npimg = cv2.line(npimg, temp0, temp1, (0,255,255), 3)
                 if pair[0] not in human.body_parts.keys() or pair[1] not in human.body_parts.keys() or pair[0] > 13 or pair[1] > 13: # face remove
                     continue
-                npimg = cv2.line(npimg, MAFCenters[select][pair[0]], MAFCenters[select][pair[1]],(0,255,255), 3)
+
+                #temp2 =tuple(MAFCenters[select][pair[0]][0], MAFCenters[select][pair[0]][1])
+                #temp3 = tuple(MAFCenters[select][pair[1]][0]+ MAFCenters[select][pair[1]][1])
+                #print("2"+ temp2+"3"+temp3)
+                #npimg = cv2.line(npimg, temp2, temp3,(0,255,255), 3)
         return npimg, humans_idx, centers, body_parts_count
 
 
