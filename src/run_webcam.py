@@ -27,7 +27,8 @@ joint_dist = [[0 for i in range(19)] for j in range(12)] # distance array values
 joint_pointX = [[1 for i in range(19)] for j in range(12)] # for return value of axisX
 joint_pointY = [[1 for i in range(19)] for j in range(12)] # for return value of axisY
 frame_add = 0
-angle_filter = [[0 for i in range(10)] for j in range(12)]
+angle_filter = [[[0 for i in range(10)] for j in range(10)] for l in range(12)]
+angle_filter_count=0
 coordinates=[[0 for i in range(19)]]
 
 point3dX = [[1 for i in range(19)] for j in range(12)] # for return value of axisX
@@ -100,7 +101,10 @@ def multiple_depth_data(tempX,tempY,i,humans,depth_data_array,image_rgb,depth_sc
 
 
  # Not Yet. many peoples, pair of arm angle. 
-def Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter_count,humans,i):
+def Angle_calculator(joint_pointX,joint_pointY,joint_dist, angle_filter,angle_filter_count,humans,i):
+
+    if angle_filter_count == 10:
+        angle_filter_count = 0
 
     if humans[i] != None:
 
@@ -114,15 +118,15 @@ def Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter_count,hum
                 z2=joint_dist[i][2] - joint_dist[i][1]
             else :
                 z1,z2=0,0 
-            angle_filter[i][0] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
+            angle_filter[i][0][angle_filter_count] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
             # print(angle_filter[i][0])
 
-            if not angle_filter[i][0]:
-               angle_filter[i][0] = 0
-            if angle_filter[i][0] > 90 :
-               angle_filter[i][0] = 180 - Angle_main_calculator(x1,y1,z1,x2,y2,z2)
+            if not angle_filter[i][0][angle_filter_count] :
+               angle_filter[i][0][angle_filter_count] = 0
+            if angle_filter[i][0][angle_filter_count] > 90 :
+               angle_filter[i][0][angle_filter_count] = 180 - Angle_main_calculator(x1,y1,z1,x2,y2,z2)
         else:
-            angle_filter[i][0] = 0
+            angle_filter[i][0][angle_filter_count] = 0
 
 
         if joint_pointX[i][1] != 1 and joint_pointX[i][2] != 1 and joint_pointX[i][3] != 1  : # Rshoulder 1 , axis 2
@@ -135,9 +139,9 @@ def Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter_count,hum
                 z2=joint_dist[i][3] - joint_dist[i][2]
             else :
                 z1,z2=0,0
-            angle_filter[i][1] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
+            angle_filter[i][1][angle_filter_count] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
         else:
-            angle_filter[i][1] = 0
+            angle_filter[i][1][angle_filter_count] = 0
 
 
         if joint_pointX[i][2] != 1 and joint_pointX[i][3] != 1 and joint_pointX[i][4] != 1  : # RElbow 2, axis 3
@@ -150,9 +154,9 @@ def Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter_count,hum
                 z2=joint_dist[i][4] - joint_dist[i][3]
             else :
                 z1,z2=0,0
-            angle_filter[i][2] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
+            angle_filter[i][2][angle_filter_count] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
         else:
-            angle_filter[i][2] = 0
+            angle_filter[i][2][angle_filter_count] = 0
 
         
         if joint_pointX[i][1] != 1 and joint_pointX[i][5] != 1 and joint_pointX[i][6] != 1 : # Lshoulder 3, axis 5
@@ -165,9 +169,9 @@ def Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter_count,hum
                 z2=joint_dist[i][6] - joint_dist[i][5]
             else :
                 z1,z2=0,0
-            angle_filter[i][3] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
+            angle_filter[i][3][angle_filter_count] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
         else:
-            angle_filter[i][3] = 0
+            angle_filter[i][3][angle_filter_count] = 0
 
         if joint_pointX[i][5] != 1 and joint_pointX[i][6] != 1 and joint_pointX[i][7] != 1 : # LElbow 4, axis 6
             x1=joint_pointX[i][5] - joint_pointX[i][6]
@@ -179,9 +183,9 @@ def Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter_count,hum
                 z2=joint_dist[i][7] - joint_dist[i][6]
             else :
                 z1,z2=0,0
-            angle_filter[i][4] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
+            angle_filter[i][4][angle_filter_count] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
         else:
-            angle_filter[i][4] = 0
+            angle_filter[i][4][angle_filter_count] = 0
 
         if joint_pointX[i][1] != 1 and joint_pointX[i][18] != 1 and joint_pointX[i][8] != 1  : # Wrist 5, axis 18
             x1=joint_pointX[i][1] - joint_pointX[i][18]
@@ -193,14 +197,14 @@ def Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter_count,hum
                 z2=joint_dist[i][8] - joint_dist[i][18]
             else :
                 z1,z2=0,0 
-            angle_filter[i][5] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
+            angle_filter[i][5][angle_filter_count] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
 
-            if not angle_filter[i][5]:
-               angle_filter[i][5] = 0
-            if angle_filter[i][5] > 90 :
-               angle_filter[i][5] = 180 - Angle_main_calculator(x1,y1,z1,x2,y2,z2)
+            if not angle_filter[i][5][angle_filter_count] :
+               angle_filter[i][5][angle_filter_count] = 0
+            if angle_filter[i][5][angle_filter_count] > 90 :
+               angle_filter[i][5][angle_filter_count] = 180 - Angle_main_calculator(x1,y1,z1,x2,y2,z2)
         else:
-            angle_filter[i][5] = 0
+            angle_filter[i][5][angle_filter_count] = 0
 
         if joint_pointX[i][18] != 1 and joint_pointX[i][8] != 1 and joint_pointX[i][9] != 1 : # RHip 6, axis 8
             x1=joint_pointX[i][9] - joint_pointX[i][8]
@@ -212,9 +216,9 @@ def Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter_count,hum
                 z2=joint_dist[i][18] - joint_dist[i][8]
             else :
                 z1,z2=0,0
-            angle_filter[i][6] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
+            angle_filter[i][6][angle_filter_count] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
         else:
-            angle_filter[i][6] = 0
+            angle_filter[i][6][angle_filter_count] = 0
 
         if joint_pointX[i][12] != 1 and joint_pointX[i][11] != 1 and joint_pointX[i][18] != 1 : # LHip 7, axis 11
             x1=joint_pointX[i][12] - joint_pointX[i][11]
@@ -226,9 +230,9 @@ def Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter_count,hum
                 z2=joint_dist[i][18] - joint_dist[i][11]
             else :
                 z1,z2=0,0
-            angle_filter[i][7] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
+            angle_filter[i][7][angle_filter_count] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
         else:
-            angle_filter[i][7] = 0
+            angle_filter[i][7][angle_filter_count] = 0
 
         if joint_pointX[i][8] != 1 and joint_pointX[i][9] != 1 and joint_pointX[i][10] != 1 : # RKnee 8, axis 9
             x1=joint_pointX[i][8] - joint_pointX[i][9]
@@ -240,9 +244,9 @@ def Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter_count,hum
                 z2=joint_dist[i][10] - joint_dist[i][9]
             else :
                 z1,z2=0,0
-            angle_filter[i][8] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
+            angle_filter[i][8][angle_filter_count] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
         else:
-            angle_filter[i][8] = 0
+            angle_filter[i][8][angle_filter_count] = 0
 
         if joint_pointX[i][11] != 1 and joint_pointX[i][12] != 1 and joint_pointX[i][13] != 1 : # LKnee 9, axis 12
             x1=joint_pointX[i][11] - joint_pointX[i][12]
@@ -254,11 +258,14 @@ def Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter_count,hum
                 z2=joint_dist[i][13] - joint_dist[i][12]
             else :
                 z1,z2=0,0
-            angle_filter[i][9] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
+            angle_filter[i][9][angle_filter_count] = Angle_main_calculator(x1,y1,z1,x2,y2,z2)
         else:
-            angle_filter[i][9] = 0
+            angle_filter[i][9][angle_filter_count] = 0
 
-    return angle_filter
+
+       
+    angle_filter_count = angle_filter_count + 1
+    return angle_filter,angle_filter_count
 
 def Deprojections(tempX, tempY, tempZ,i,humans, depth_intrin, depth_scale):
     for j in range(0, 19):
@@ -374,7 +381,7 @@ if __name__ == '__main__':
                     point3dX, point3dY, point3dZ = Deprojections(joint_pointX, joint_pointY, joint_dist, i, humans, depth_intrin, depth_scale)
 
                     #angle_filter,angle_filter_count = Angle_calculator(joint_pointX,joint_pointY,joint_dist,angle_filter,angle_filter_count,humans,i)
-                    angle_filter = Angle_calculator(point3dX, point3dY, point3dZ,angle_filter, humans, i)
+                    angle_filter, angle_filter_count = Angle_calculator(point3dX, point3dY, point3dZ,angle_filter, angle_filter_count, humans, i)
 
                     # putText Depth
                     cv2.putText(image_rgb, str(point3dZ[i][0]), (joint_pointX[i][0] - 5, joint_pointY[i][0] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5,(255, 255, 255), 2)
@@ -394,16 +401,16 @@ if __name__ == '__main__':
                     cv2.putText(image_rgb, str(point3dZ[i][18]), (joint_pointX[i][18] - 5, joint_pointY[i][18] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
                     # putText Angle
-                    cv2.putText(image_rgb,str(angle_filter[i][0]),(joint_pointX[i][1],joint_pointY[i][1]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
-                    cv2.putText(image_rgb,str(angle_filter[i][1]),(joint_pointX[i][2],joint_pointY[i][2]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
-                    cv2.putText(image_rgb,str(angle_filter[i][2]),(joint_pointX[i][3],joint_pointY[i][3]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
-                    cv2.putText(image_rgb,str(angle_filter[i][3]),(joint_pointX[i][5],joint_pointY[i][5]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
-                    cv2.putText(image_rgb,str(angle_filter[i][4]),(joint_pointX[i][6],joint_pointY[i][6]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
-                    cv2.putText(image_rgb,str(angle_filter[i][5]),(joint_pointX[i][18],joint_pointY[i][18]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
-                    cv2.putText(image_rgb,str(angle_filter[i][6]),(joint_pointX[i][8],joint_pointY[i][8]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
-                    cv2.putText(image_rgb,str(angle_filter[i][7]),(joint_pointX[i][11],joint_pointY[i][11]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
-                    cv2.putText(image_rgb,str(angle_filter[i][8]),(joint_pointX[i][9],joint_pointY[i][9]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
-                    cv2.putText(image_rgb,str(angle_filter[i][9]),(joint_pointX[i][12],joint_pointY[i][12]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
+                    cv2.putText(image_rgb,str(getMedian(angle_filter[i][0])),(joint_pointX[i][1],joint_pointY[i][1]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
+                    cv2.putText(image_rgb,str(getMedian(angle_filter[i][1])),(joint_pointX[i][2],joint_pointY[i][2]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
+                    cv2.putText(image_rgb,str(getMedian(angle_filter[i][2])),(joint_pointX[i][3],joint_pointY[i][3]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
+                    cv2.putText(image_rgb,str(getMedian(angle_filter[i][3])),(joint_pointX[i][5],joint_pointY[i][5]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
+                    cv2.putText(image_rgb,str(getMedian(angle_filter[i][4])),(joint_pointX[i][6],joint_pointY[i][6]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
+                    cv2.putText(image_rgb,str(getMedian(angle_filter[i][5])),(joint_pointX[i][18],joint_pointY[i][18]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
+                    cv2.putText(image_rgb,str(getMedian(angle_filter[i][6])),(joint_pointX[i][8],joint_pointY[i][8]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
+                    cv2.putText(image_rgb,str(getMedian(angle_filter[i][7])),(joint_pointX[i][9],joint_pointY[i][9]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
+                    cv2.putText(image_rgb,str(getMedian(angle_filter[i][8])),(joint_pointX[i][11],joint_pointY[i][11]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
+                    cv2.putText(image_rgb,str(getMedian(angle_filter[i][9])),(joint_pointX[i][12],joint_pointY[i][12]),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),2)
 
         cv2.putText(image_rgb,
             "FPS: %f" % (1.0 / (time.time() - fps_time)),
