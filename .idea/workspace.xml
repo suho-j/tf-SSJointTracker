@@ -2,8 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="681f632f-89b9-45d8-958a-7be075f339bd" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/SSJointTracker_alpha_modify.iml" afterPath="$PROJECT_DIR$/.idea/SSJointTracker_alpha_modify.iml" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Ho_Office.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/models/graph/cmu/download.sh" afterPath="$PROJECT_DIR$/models/graph/cmu/download.sh" />
+      <change beforePath="$PROJECT_DIR$/models/graph/mobilenet_thin/graph.pb" afterPath="$PROJECT_DIR$/models/graph/mobilenet_thin/graph.pb" />
+      <change beforePath="$PROJECT_DIR$/models/numpy/download.sh" afterPath="$PROJECT_DIR$/models/numpy/download.sh" />
+      <change beforePath="$PROJECT_DIR$/models/pretrained/mobilenet_v1_0.50_224_2017_06_14/download.sh" afterPath="$PROJECT_DIR$/models/pretrained/mobilenet_v1_0.50_224_2017_06_14/download.sh" />
+      <change beforePath="$PROJECT_DIR$/models/pretrained/mobilenet_v1_0.75_224_2017_06_14/download.sh" afterPath="$PROJECT_DIR$/models/pretrained/mobilenet_v1_0.75_224_2017_06_14/download.sh" />
+      <change beforePath="$PROJECT_DIR$/models/pretrained/mobilenet_v1_1.0_224_2017_06_14/download.sh" afterPath="$PROJECT_DIR$/models/pretrained/mobilenet_v1_1.0_224_2017_06_14/download.sh" />
+      <change beforePath="$PROJECT_DIR$/src/__init__.py" afterPath="" />
       <change beforePath="$PROJECT_DIR$/src/estimator.py" afterPath="$PROJECT_DIR$/src/estimator.py" />
+      <change beforePath="$PROJECT_DIR$/src/ex.py" afterPath="$PROJECT_DIR$/src/ex.py" />
+      <change beforePath="$PROJECT_DIR$/src/imgui.ini" afterPath="$PROJECT_DIR$/src/imgui.ini" />
+      <change beforePath="$PROJECT_DIR$/src/run_video.py" afterPath="$PROJECT_DIR$/src/run_video.py" />
+      <change beforePath="$PROJECT_DIR$/src/run_webcam.py" afterPath="$PROJECT_DIR$/src/run_webcam.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,23 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="run_webcam.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/run_webcam.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8525">
-              <caret line="352" column="0" lean-forward="false" selection-start-line="352" selection-start-column="0" selection-end-line="352" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="estimator.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="estimator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/estimator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="392" column="88" lean-forward="true" selection-start-line="392" selection-start-column="88" selection-end-line="392" selection-end-column="88" />
+            <state relative-caret-position="11675">
+              <caret line="478" column="27" lean-forward="false" selection-start-line="478" selection-start-column="27" selection-end-line="478" selection-end-column="27" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -38,13 +42,47 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/common.py">
+      <file leaf-file-name="run_webcam_dance.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/run_webcam_dance.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="24" column="4" lean-forward="false" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="13" />
+            <state relative-caret-position="27275">
+              <caret line="1110" column="20" lean-forward="false" selection-start-line="1110" selection-start-column="20" selection-end-line="1110" selection-end-column="20" />
               <folding>
-                <element signature="e#0#21#0" expanded="true" />
+                <element signature="e#145#170#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="estimator.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src_댄스/estimator.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="10300">
+              <caret line="423" column="23" lean-forward="false" selection-start-line="423" selection-start-column="23" selection-end-line="423" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#16#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="estimator_dance.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/estimator_dance.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="366">
+              <caret line="344" column="33" lean-forward="true" selection-start-line="344" selection-start-column="33" selection-end-line="344" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="run_webcam.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/run_webcam.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15325">
+              <caret line="632" column="0" lean-forward="false" selection-start-line="632" selection-start-column="0" selection-end-line="632" selection-end-column="0" />
+              <folding>
+                <element signature="e#145#170#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -54,36 +92,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>find_device_that_supports_advanced_mode</find>
-      <find>depth_scale</find>
-      <find>color_intrin</find>
-      <find>depth_to_color_extrin</find>
-      <find>depth_data_array</find>
-      <find>depth_sensor</find>
-      <find>rgb_sensor</find>
-      <find>pipe_profile</find>
-      <find>image_rgb</find>
-      <find>depth_intrin</find>
-      <find>angle_filter</find>
-      <find>int</find>
-      <find>&gt; 0</find>
-      <find>cal1</find>
-      <find>set</find>
-      <find>paf</find>
-      <find>pair_order</find>
-      <find>print</find>
-      <find>abs</find>
-      <find>cmu</find>
+      <find>dep</find>
+      <find>draw_humans</find>
+      <find>estimator</find>
+      <find>TfPoseEstimator</find>
+      <find>true</find>
+      <find>unity</find>
+      <find>Unity_control</find>
+      <find>dist</find>
       <find>Angle_calculator</find>
-      <find>body_parts_count</find>
-      <find>centers</find>
-      <find>getAverageCenter</find>
-      <find>clEnqueueWriteBuffer1</find>
-      <find>wrist_inference</find>
-      <find>temp0</find>
-      <find>MAFCenters</find>
-      <find>temp</find>
+      <find>angle_conv</find>
+      <find>__main</find>
+      <find>line</find>
+      <find>cv2.lin</find>
       <find>pair</find>
+      <find>anker</find>
+      <find>send</find>
+      <find>draw</find>
+      <find>cv2</find>
+      <find>cv2.line</find>
+      <find>tfposeestimator</find>
+      <find>cv2.cir</find>
+      <find>cv2.c</find>
+      <find>nose</find>
+      <find>push the</find>
+      <find>joint_pix</find>
+      <find>point3dY</find>
+      <find>wrist_check</find>
+      <find>nose_inference</find>
+      <find>push the</find>
+      <find>wrist_inference</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -92,19 +130,33 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../../librealsense/wrappers/python/examples/align-depth2color.py" />
+        <option value="C:/../librealsense/wrappers/python/examples/align-depth2color.py" />
         <option value="$PROJECT_DIR$/src/run_video.py" />
-        <option value="$PROJECT_DIR$/../../../study/python/pyrealsenseDeprojection.py" />
-        <option value="$PROJECT_DIR$/src/run_webcam.py" />
+        <option value="C:/../../study/python/pyrealsenseDeprojection.py" />
+        <option value="$PROJECT_DIR$/src/mysql_RHand_update.py" />
+        <option value="C:/../study/python/socket.py" />
+        <option value="C:/../study/python/client.py" />
+        <option value="C:/librealsense-master/librealsense-master/wrappers/python/examples/align-depth2color.py" />
+        <option value="C:/../study/python/fps_test_pyrealsense.py" />
+        <option value="C:/../study/python/post-processing.py" />
+        <option value="$PROJECT_DIR$/src/common.py" />
+        <option value="E:/src/run_webcam.py" />
+        <option value="$PROJECT_DIR$/src/mysql_update2.py" />
+        <option value="$PROJECT_DIR$/src/mysql_update.py" />
+        <option value="$PROJECT_DIR$/src 4명 section 정해짐/estimator.py" />
         <option value="$PROJECT_DIR$/src/estimator.py" />
+        <option value="$PROJECT_DIR$/src/run_webcam.py" />
+        <option value="$PROJECT_DIR$/src/run_webcam_dance.py" />
+        <option value="$PROJECT_DIR$/src_댄스/estimator.py" />
+        <option value="$PROJECT_DIR$/src/estimator_dance.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="47" />
+    <option name="x" value="-161" />
     <option name="y" value="-8" />
-    <option name="width" value="1400" />
-    <option name="height" value="1000" />
+    <option name="width" value="1858" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -113,10 +165,13 @@
           <State>
             <id />
           </State>
+          <State>
+            <id>Python</id>
+          </State>
         </expanded-state>
         <selected-state>
           <State>
-            <id>Buildout</id>
+            <id>PyPackageRequirementsInspection</id>
           </State>
         </selected-state>
       </profile-state>
@@ -137,29 +192,37 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="tf-SSJointTracker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tf-SSJointTracker" type="462c0819:PsiDirectoryNode" />
+              <item name="tf-SSJointTracker_original" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tf-SSJointTracker_original" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="tf-SSJointTracker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tf-SSJointTracker" type="462c0819:PsiDirectoryNode" />
+              <item name="tf-SSJointTracker_original" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tf-SSJointTracker_original" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="SSJointTracker_alpha_modify" is-module-sdk="true">
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="SSJointTracker_alpha_modify" />
+      </console-settings>
+    </option>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -173,7 +236,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.run_webcam">
+  <component name="RunManager" selected="Python.run_webcam_dance">
     <configuration name="estimator" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -192,37 +255,19 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="python-rs400-advanced-mode-example" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="fps_test_pyrealsense" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../librealsense newest/librealsense/wrappers/python/examples" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../study/python" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="SSJointTracker_alpha_modify" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../librealsense newest/librealsense/wrappers/python/examples/python-rs400-advanced-mode-example.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="run_video" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="SSJointTracker_alpha_modify" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/run_video.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../study/python/fps_test_pyrealsense.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -234,9 +279,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Python36\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="SSJointTracker_alpha_modify" />
@@ -246,7 +291,25 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="tmpC245.tmp" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="run_webcam_dance" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="SSJointTracker_alpha_modify" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/run_webcam_dance.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="tmpF588.tmp" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -258,7 +321,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="SSJointTracker_alpha_modify" />
-      <option name="SCRIPT_NAME" value="$USER_HOME$/AppData/Local/Temp/tmpC245.tmp.py" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/AppData/Local/Temp/tmpF588.tmp.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -266,18 +329,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.run_webcam" />
-      <item index="1" class="java.lang.String" itemvalue="Python.python-rs400-advanced-mode-example" />
-      <item index="2" class="java.lang.String" itemvalue="Python.run_video" />
-      <item index="3" class="java.lang.String" itemvalue="Python.estimator" />
-      <item index="4" class="java.lang.String" itemvalue="Python.tmpC245.tmp" />
+      <item index="1" class="java.lang.String" itemvalue="Python.fps_test_pyrealsense" />
+      <item index="2" class="java.lang.String" itemvalue="Python.estimator" />
+      <item index="3" class="java.lang.String" itemvalue="Python.tmpF588.tmp" />
+      <item index="4" class="java.lang.String" itemvalue="Python.run_webcam_dance" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.run_webcam" />
-        <item index="1" class="java.lang.String" itemvalue="Python.estimator" />
-        <item index="2" class="java.lang.String" itemvalue="Python.tmpC245.tmp" />
-        <item index="3" class="java.lang.String" itemvalue="Python.run_video" />
-        <item index="4" class="java.lang.String" itemvalue="Python.python-rs400-advanced-mode-example" />
+        <item index="0" class="java.lang.String" itemvalue="Python.run_webcam_dance" />
+        <item index="1" class="java.lang.String" itemvalue="Python.run_webcam" />
+        <item index="2" class="java.lang.String" itemvalue="Python.tmpF588.tmp" />
+        <item index="3" class="java.lang.String" itemvalue="Python.estimator" />
+        <item index="4" class="java.lang.String" itemvalue="Python.fps_test_pyrealsense" />
       </list>
     </recent_temporary>
   </component>
@@ -285,7 +348,7 @@
     <option name="remove_strategy" value="false" />
   </component>
   <component name="SvnConfiguration">
-    <configuration />
+    <configuration>C:\Users\ho_office\AppData\Roaming\Subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -298,18 +361,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="70" y="-8" width="1858" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18020834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15038002" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32908705" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3641189" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32179227" sideWeight="0.34690553" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32179227" sideWeight="0.6530945" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39915073" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.398167" sideWeight="0.49348533" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -325,225 +388,180 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/estimator.py</url>
-          <line>317</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="5" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/run_video.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp31D8.tmp.py" />
+    <entry file="file://C:/../study/python/fps_test_pyrealsense.py" />
+    <entry file="file://E:/2222222/run_webcam.py" />
+    <entry file="file://$PROJECT_DIR$/src/run_webcam2.py" />
+    <entry file="file://C:/../study/python/mathmatics.py" />
+    <entry file="file://C:/../study/python/convexhull.py" />
+    <entry file="file://E:/src/run_webcam.py" />
+    <entry file="file://E:/src_original - 복사본/run_webcam.py" />
+    <entry file="file://E:/src_new/run_webcam.py" />
+    <entry file="file://E:/src_original/run_webcam.py" />
+    <entry file="file://$PROJECT_DIR$/src_original/run_webcam.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="7" column="27" lean-forward="false" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
+        <state relative-caret-position="532">
+          <caret line="788" column="47" lean-forward="false" selection-start-line="788" selection-start-column="47" selection-end-line="788" selection-end-column="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2017.3/system/python_stubs/-1218558373/pyrealsense2/__init__/extension.py">
+    <entry file="file://C:/Python36/Lib/site-packages/tensorflow/python/framework/errors_impl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2000">
-          <caret line="80" column="6" lean-forward="false" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
+        <state relative-caret-position="578">
+          <caret line="518" column="0" lean-forward="false" selection-start-line="518" selection-start-column="0" selection-end-line="518" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/site-packages/tensorpack/train/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2375">
-          <caret line="107" column="13" lean-forward="false" selection-start-line="107" selection-start-column="13" selection-end-line="107" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2017.3/system/python_stubs/-1218558373/cv2/cv2/VideoCapture.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1650">
-          <caret line="81" column="25" lean-forward="false" selection-start-line="81" selection-start-column="25" selection-end-line="81" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/networks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="7" lean-forward="false" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2017.3/system/python_stubs/-1218558373/pyrealsense2/points.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="12" column="6" lean-forward="false" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/python-tutorial-1-depth.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/tm2_example.py" />
-    <entry file="file://$PROJECT_DIR$/src/estimator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="7" column="17" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/run_webcam.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmpF588.tmp.py" />
+    <entry file="file://C:/librealsense newest/librealsense/wrappers/python/examples/align-depth2color.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp91F1.tmp.py" />
+    <entry file="file://$PROJECT_DIR$/src/config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2017.3/system/python_stubs/-1218558373/pyrealsense2/points.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmpD6DB.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp6CE3.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmpE732.tmp.py" />
+    <entry file="file://$PROJECT_DIR$/src_original/estimator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="12" column="6" lean-forward="false" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+        <state relative-caret-position="213">
+          <caret line="292" column="8" lean-forward="false" selection-start-line="292" selection-start-column="8" selection-end-line="292" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/align-depth2color.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/export_ply_example.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/opencv_viewer_example.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/pybackend_example_1_general.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/python-rs400-advanced-mode-example.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/python-tutorial-1-depth.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/tm2_example.py" />
-    <entry file="file://$PROJECT_DIR$/src/run_webcam.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp541C.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp4CF7.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp69B3.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp84AF.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmpF19D.tmp.py" />
+    <entry file="file://C:/Python36/Lib/site-packages/tensorflow/python/client/session.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2050">
-          <caret line="93" column="1" lean-forward="false" selection-start-line="93" selection-start-column="1" selection-end-line="93" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="188">
+          <caret line="1290" column="0" lean-forward="false" selection-start-line="1290" selection-start-column="0" selection-end-line="1290" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/align-depth2color.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/export_ply_example.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/opencv_viewer_example.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/pybackend_example_1_general.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/tm2_example.py" />
-    <entry file="file://$USER_HOME$/.PyCharmCE2017.3/system/python_stubs/-1218558373/pyrealsense2/points.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmpA016.tmp.py" />
+    <entry file="file://$PROJECT_DIR$/src/mysql_update2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="12" column="6" lean-forward="false" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+        <state relative-caret-position="1600">
+          <caret line="65" column="26" lean-forward="false" selection-start-line="65" selection-start-column="20" selection-end-line="65" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2017.3/system/python_stubs/-1218558373/cv2/cv2/VideoCapture.py">
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/3/datetime.pyi">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1650">
-          <caret line="81" column="25" lean-forward="false" selection-start-line="81" selection-start-column="25" selection-end-line="81" selection-end-column="25" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/site-packages/tensorpack/train/config.py">
+    <entry file="file://$PROJECT_DIR$/src/mysql_update.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2375">
-          <caret line="107" column="13" lean-forward="false" selection-start-line="107" selection-start-column="13" selection-end-line="107" selection-end-column="13" />
+        <state relative-caret-position="5075">
+          <caret line="204" column="18" lean-forward="false" selection-start-line="204" selection-start-column="4" selection-end-line="204" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2017.3/system/python_stubs/-1218558373/pyrealsense2/__init__/extension.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp7BEF.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmpCDD9.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmpB4CD.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp4D26.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp76F7.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp3575.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmpD78C.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmpA1E4.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp451D.tmp.py" />
+    <entry file="file://D:/workspace/project/SSJointTracker/tf-SSJointTracker/src/run_webcam.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2000">
-          <caret line="80" column="6" lean-forward="false" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
+        <state relative-caret-position="1295">
+          <caret line="771" column="58" lean-forward="true" selection-start-line="771" selection-start-column="58" selection-end-line="771" selection-end-column="58" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/python-tutorial-1-depth.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/python-rs400-advanced-mode-example.py" />
-    <entry file="file://$PROJECT_DIR$/../../SSJointTracker_alpha_0322/src/run_webcam.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/site-packages/tensorflow/python/platform/self_check.py">
+    <entry file="file://$PROJECT_DIR$/src 4명 section 정해짐/estimator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="842">
-          <caret line="92" column="76" lean-forward="false" selection-start-line="92" selection-start-column="76" selection-end-line="92" selection-end-column="76" />
+        <state relative-caret-position="230">
+          <caret line="293" column="19" lean-forward="false" selection-start-line="293" selection-start-column="8" selection-end-line="293" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/ctypes/__init__.py">
+    <entry file="file://$PROJECT_DIR$/src 4명 section 정해짐/run_webcam.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="842">
-          <caret line="346" column="0" lean-forward="false" selection-start-line="346" selection-start-column="0" selection-end-line="346" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/site-packages/tensorflow/python/pywrap_tensorflow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/site-packages/tensorflow/python/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="842">
-          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../study/python/pyrealsense_ex - 복사본.py" />
-    <entry file="file://$PROJECT_DIR$/../../../study/python/pyrealsense_ex.py" />
-    <entry file="file://$USER_HOME$/.PyCharmCE2017.3/system/python_stubs/-1218558373/time.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="625">
-          <caret line="67" column="37" lean-forward="false" selection-start-line="64" selection-start-column="7" selection-end-line="70" selection-end-column="4" />
+        <state relative-caret-position="-84">
+          <caret line="1039" column="125" lean-forward="false" selection-start-line="1039" selection-start-column="114" selection-end-line="1039" selection-end-column="125" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/run_video.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
-          <caret line="59" column="0" lean-forward="true" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+        <state relative-caret-position="316">
+          <caret line="47" column="39" lean-forward="false" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../librealsense newest/librealsense/wrappers/python/examples/opencv_viewer_example.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense newest/librealsense/wrappers/python/examples/python-rs400-advanced-mode-example.py" />
-    <entry file="file://$PROJECT_DIR$/../../librealsense/wrappers/python/examples/align-depth2color.py" />
-    <entry file="file://$PROJECT_DIR$/../../../study/python/pyrealsenseDeprojection.py" />
-    <entry file="file://$PROJECT_DIR$/../../tf-pose-estimation-master/tf-pose-estimation-master/src/run_webcam.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmpE3A9.tmp.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmpC245.tmp.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmpF987.tmp.py" />
-    <entry file="file://$PROJECT_DIR$/src/networks.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp7636.tmp.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/tmp8616.tmp.py" />
+    <entry file="file://D:/workspace/project/SSJointTracker/tf-SSJointTracker/src 4명 section 정해짐/estimator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1825">
-          <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/run_webcam.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8525">
-          <caret line="352" column="0" lean-forward="false" selection-start-line="352" selection-start-column="0" selection-end-line="352" selection-end-column="0" />
+        <state relative-caret-position="15325">
+          <caret line="632" column="0" lean-forward="false" selection-start-line="632" selection-start-column="0" selection-end-line="632" selection-end-column="0" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="24" column="4" lean-forward="false" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#145#170#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/estimator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="392" column="88" lean-forward="true" selection-start-line="392" selection-start-column="88" selection-end-line="392" selection-end-column="88" />
+        <state relative-caret-position="11675">
+          <caret line="478" column="27" lean-forward="false" selection-start-line="478" selection-start-column="27" selection-end-line="478" selection-end-column="27" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/run_webcam_dance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27275">
+          <caret line="1110" column="20" lean-forward="false" selection-start-line="1110" selection-start-column="20" selection-end-line="1110" selection-end-column="20" />
+          <folding>
+            <element signature="e#145#170#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src_댄스/estimator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10300">
+          <caret line="423" column="23" lean-forward="false" selection-start-line="423" selection-start-column="23" selection-end-line="423" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/estimator_dance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="344" column="33" lean-forward="true" selection-start-line="344" selection-start-column="33" selection-end-line="344" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>

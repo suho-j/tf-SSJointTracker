@@ -120,7 +120,7 @@ class PoseEstimator:
             heat_mat = np.rollaxis(heat_mat, 2, 0)
         if paf_mat.shape[2] == 38:
             paf_mat = np.rollaxis(paf_mat, 2, 0)
-        #print(heat_mat.shape[2])
+        # print(heat_mat.shape[2])
         if PoseEstimator.heatmap_supress:
             heat_mat = heat_mat - heat_mat.min(axis=1).min(axis=1).reshape(19, 1, 1)
             heat_mat = heat_mat - heat_mat.min(axis=2).reshape(19, heat_mat.shape[1], 1)
@@ -135,7 +135,7 @@ class PoseEstimator:
             _NMS_Threshold = PoseEstimator.NMS_Threshold
 
         # extract interesting coordinates using NMS.
-        coords = []     # [[coords in plane1], [....], ...]
+        coords = []  # [[coords in plane1], [....], ...]
         for plain in heat_mat[:-1]:
             nms = PoseEstimator.non_max_suppression(plain, 5, _NMS_Threshold)
             coords.append(np.where(nms >= _NMS_Threshold))
@@ -247,7 +247,7 @@ class PoseEstimator:
 
 
 class TfPoseEstimator:
-    ENSEMBLE = 'addup'        # average, addup
+    ENSEMBLE = 'addup'  # average, addup
 
     def __init__(self, graph_path, target_size=(320, 240)):
         self.target_size = target_size
@@ -284,160 +284,269 @@ class TfPoseEstimator:
     @staticmethod
     def _quantize_img(npimg):
         npimg_q = npimg + 1.0
-        npimg_q /= (2.0 / 2**8)
+        npimg_q /= (2.0 / 2 ** 8)
         # npimg_q += 0.5
         npimg_q = npimg_q.astype(np.uint8)
         return npimg_q
 
-    def average_Center(centers, select, i):
-        centers[select][i].sort()
-        tempX = 0
-        tempY = 0
-        center = {}
-        for j in range(1, 9):
-            tempX = tempX + centers[select][i][j][0]
-            tempY = tempY + centers[select][i][j][1]
-        center[0] = tempX / 8
-        center[1] = tempY / 8
-        return center
-
     @staticmethod
-    def draw_humans(npimg, humans, humans_idx, centers, body_parts_count, imgcopy=False, ):
+    def draw_humans(npimg, humans, joint_pixelX, joint_pixelY, human_match, imgcopy=False):
+        rgb = [[0, 228, 255], [22, 219, 29], [255, 84, 0], [255, 0, 95]]
+
         if imgcopy:
             npimg = np.copy(npimg)
         image_h, image_w = npimg.shape[:2]
 
+        centers = {}
+
+        weight = 0.6
+        section = 160
+        human_section = -1
+
+        humanCount = len(humans)
+        checkPerson = np.ones(humanCount, dtype=bool)
+        neck = np.zeros(humanCount, dtype=int)
+
+        k = -1
         for human in humans:
-            MAFCenters = [[0 for i in range(19)] for j in range(12)]
-            human_idx_temp = human
-            print(human_idx_temp)
-            select = 1
+            k += 1
+            if len(human.body_parts) < 6:
+                checkPerson[k] = 0
+                neck[k] = 9999
+                # print("continue")
+                continue
+            # neck - x 추출, 대입, 정렬
 
+            neck[k] = int(human.body_parts[1].x * image_w + 0.5)
+            # neck[k] = int(depth_data_array[int(human.body_parts[1].y * image_h + 0.5)][int(human.body_parts[1].x * image_w + 0.5)])
+
+        trueHuman = checkPerson.nonzero()
+        trueHumanCount = np.shape(trueHuman)[1]
+
+        # index of the neck-x in ascending sort order
+        sorted_neck_index = np.zeros(trueHumanCount, dtype=int)
+        sorted_neck = np.zeros(trueHumanCount, dtype=int)
+        for i in range(trueHumanCount):
+            # find the minimum out of all the neck-x
+            temp = np.where(neck == min(neck))
+            sorted_neck_index[i] = temp[0][0]
+            sorted_neck[i] = neck[sorted_neck_index[i]]
+            # change the minimum neck-x to maximum
+            neck[sorted_neck_index[i]] = 9999
+
+        # 정렬된 순서로 draw circle/ line
+        for j in range(trueHumanCount):
+            # if j >0 :
+            #     continue
             # draw point
-            wrist_inference = (0,0)
+            wrist_inference = (0, 0)
             wrist_check = 0
+            nose_inference = (0, 0)
+            nose_check = 0
+            index = sorted_neck_index[j]
+            human = humans[index]
+            # match = False
 
-            for i in range(common.CocoPart.Background.value):
-                if i not in human.body_parts.keys() or i > 13:
-                    continue
-                body_part = human.body_parts[i]
-                center = (int(body_part.x * image_w + 0.5), int(body_part.y * image_h + 0.5))
+            # human is in section
+            # human_section = human_section + 1
+            # if human_section >= 4:
+            #     continue
+            # for k in range(0, 4 - human_section):
+            #     if sorted_neck[j] >= section * (human_section + k) and sorted_neck[j] < section * (human_section + k + 1):
+            #         human_section = human_section + k
+            #         human_match[human_section] = 1
+            #         match = True
+            #         break
+            #
+            # if match:
+            if True:
+                for i in range(common.CocoPart.Background.value):
+                    if i not in human.body_parts.keys() or i == 14 or i == 15:
+                        continue
 
-                if body_parts_count[select][i] < 10:
-                    centers[select][i][body_parts_count[select][i]] = center
-                    body_parts_count[select][i] += 1
-                else:
-                    for j in range (0,9):
-                        centers[select][i][j] = centers[select][i][j+1]
-                    centers[select][i][9] = center
-                if body_parts_count[select][i] == 10:
-                    MAFCenters[select][i] = TfPoseEstimator.average_Center(centers, select, i)
-                    temp = (MAFCenters[select][i][0], MAFCenters[select][i][1])
-                    cv2.circle(npimg, temp , 1, (0,0,0), thickness=9, lineType=1, shift=0)
+                    body_part = human.body_parts[i]
+                    if not joint_pixelX[index][i] == 1:
+                        joint_pixelX[index][i] = int(joint_pixelX[index][i] * weight + int(body_part.x * image_w + 0.5) * (1 - weight))
+                        joint_pixelY[index][i] = int(joint_pixelY[index][i] * weight + int(body_part.y * image_h + 0.5) * (1 - weight))
+                    else:
+                        joint_pixelX[index][i] = int(body_part.x * image_w + 0.5)
+                        joint_pixelY[index][i] = int(body_part.y * image_h + 0.5)
 
-                    if i == 8:
-                        wrist_inference = MAFCenters[select][i]
-
-                    if wrist_inference != (0,0) and i == 11:
-                        wrist_inference = (int((wrist_inference[0] + MAFCenters[select][i][0]) / 2),int((wrist_inference[1] + MAFCenters[select][i][1]) / 2))
-
-                        cv2.circle(npimg, wrist_inference, 1, (0,0,0), thickness=9, lineType=1, shift=0)
+                    if not joint_pixelX[index][8] == 1 and not joint_pixelX[index][11] == 1:
+                        joint_pixelX[index][18] = int((joint_pixelX[index][8] + joint_pixelX[index][11]) / 2)
+                        joint_pixelY[index][18] = int((joint_pixelY[index][8] + joint_pixelY[index][11]) / 2)
                         wrist_check = 1
-                        MAFCenters[select][18] = wrist_inference
 
-                '''  Part Test
-                if i==0:
-                    cv2.putText(npimg,"nose",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==1:
-                    cv2.putText(npimg,"neck",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==2:
-                    cv2.putText(npimg,"Rshoulder",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==3:
-                    cv2.putText(npimg,"RElbow",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==4:
-                    cv2.putText(npimg,"RWrist",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==5:
-                    cv2.putText(npimg,"LShoulder",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==6:
-                    cv2.putText(npimg,"LElbow",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==7:
-                    cv2.putText(npimg,"LWrist",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==8:
-                    cv2.putText(npimg,"RHip",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==9:
-                    cv2.putText(npimg,"RKnee",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==10:
-                    cv2.putText(npimg,"RAnkle",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==11:
-                    cv2.putText(npimg,"LHip",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==12:
-                    cv2.putText(npimg,"LKnee",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==13:
-                    cv2.putText(npimg,"LAnkle",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==14:
-                    cv2.putText(npimg,"REye",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==15:
-                    cv2.putText(npimg,"LEye",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==16:
-                    cv2.putText(npimg,"REar",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                if i==17:
-                    cv2.putText(npimg,"LEar",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
-                ''' 
+                    if not joint_pixelX[index][16] == 1 and not joint_pixelX[index][17] == 1:
+                        joint_pixelX[index][19] = int((joint_pixelX[index][16] + joint_pixelX[index][17]) / 2)
+                        joint_pixelY[index][19] = int((joint_pixelY[index][16] + joint_pixelY[index][17]) / 2)
+                        nose_check = 1
+                    elif not joint_pixelX[index][16] == 1 and not joint_pixelX[index][0] == 1:
+                        print("0 - X: " + str(joint_pixelX[index][0]) + "  16 - X: " + str(joint_pixelX[index][16]))
+                        joint_pixelX[index][19] = int((joint_pixelX[index][16] + joint_pixelX[index][0]) / 2)
+                        joint_pixelY[index][19] = int((joint_pixelY[index][16] + joint_pixelY[index][0]) / 2)
+                        nose_check = 1
+                        print("19 - X: " + str(joint_pixelX[index][19]) + "  Y: " + str(joint_pixelY[index][19]))
+                        # print("16 - X: " + str(joint_pixelX[index][0]) + "  Y: " + str(joint_pixelY[index][0]))
+                    elif not joint_pixelX[index][0] == 1 and not joint_pixelX[index][0] == 1:
+                        print("0 - X: " + str(joint_pixelX[index][0]) + "  17 - X: " + str(joint_pixelX[index][17]))
+                        joint_pixelX[index][19] = int((joint_pixelX[index][0] + joint_pixelX[index][17]) / 2)
+                        joint_pixelY[index][19] = int((joint_pixelY[index][0] + joint_pixelY[index][17]) / 2)
+                        nose_check = 1
+                        print("19 - X: " + str(joint_pixelX[index][19]) + "  Y: " + str(joint_pixelY[index][19]))
+                #         if not joint_pixelX[human_section][i] == 1:
+                #             joint_pixelX[human_section][i] = int(joint_pixelX[human_section][i] * weight + int(body_part.x * image_w + 0.5) * (1 - weight))
+                #             joint_pixelY[human_section][i] = int(joint_pixelY[human_section][i] * weight + int(body_part.y * image_h + 0.5) * (1 - weight))
+                #         else:
+                #             joint_pixelX[human_section][i] = int(body_part.x * image_w + 0.5)
+                #             joint_pixelY[human_section][i] = int(body_part.y * image_h + 0.5)
 
-            # draw line
-            for pair_order, pair in enumerate(common.CocoPairsRender):
-                if pair[0] == 1 and pair[1] == 8:
-                    continue
-                if pair[0] == 1 and pair[1] == 11:
-                    continue
-                if wrist_check == 1 and (pair[0] == 1 or pair[0] == 8 or pair[0] == 11):
-                    temp0 = (MAFCenters[select][pair[0]][0],MAFCenters[select][pair[0]][1])
-                    temp1 = (MAFCenters[select][18][0], MAFCenters[select][18][1])
-                    npimg = cv2.line(npimg, temp0, temp1, (0,255,255), 3)
-                if pair[0] not in human.body_parts.keys() or pair[1] not in human.body_parts.keys() or pair[0] > 13 or pair[1] > 13: # face remove
-                    continue
+                for i in range(common.CocoPart.Background.value):
+                    if i not in human.body_parts.keys() or i == 14 or i == 15:
+                        continue
 
-                #temp2 =tuple(MAFCenters[select][pair[0]][0], MAFCenters[select][pair[0]][1])
-                #temp3 = tuple(MAFCenters[select][pair[1]][0]+ MAFCenters[select][pair[1]][1])
-                #print("2"+ temp2+"3"+temp3)
-                #npimg = cv2.line(npimg, temp2, temp3,(0,255,255), 3)
-        return npimg, humans_idx, centers, body_parts_count
+                    # human.body_parts[i].x = joint_pixelX[human_section][i]
+                    # human.body_parts[i].y = joint_pixelY[human_section][i]
+                    human.body_parts[i].x = joint_pixelX[index][i]
+                    human.body_parts[i].y = joint_pixelY[index][i]
+                    body_part = human.body_parts[i]
+                    center = (body_part.x, body_part.y)
+                    centers[i] = center
+                    cv2.circle(npimg, center, 1, (0, 0, 0), thickness=2, lineType=1, shift=0)
 
+                    # if i == 8:
+                    #     wrist_inference = center
+                    #
+                    # if wrist_inference != (0, 0) and i == 11:
+                    #     wrist_inference = (
+                    #     int((wrist_inference[0] + center[0]) / 2), int((wrist_inference[1] + center[1]) / 2))
+                    #     cv2.circle(npimg, wrist_inference, 1, (0, 0, 0), thickness=2, lineType=1, shift=0)
+                    #
+                    #     wrist_check = 1
+                    #     centers[18] = wrist_inference
 
+                    if wrist_check == 1:
+                        wrist_inference = (joint_pixelX[index][18], joint_pixelY[index][18])
+                        cv2.circle(npimg, wrist_inference, 1, (0, 0, 0), thickness=2, lineType=1, shift=0)
+                        print("wrist_inference: "+ str(wrist_inference))
+                        centers[18] = wrist_inference
+                        wrist_check = 2
+                    if nose_check == 1:
+                        nose_inference = (joint_pixelX[index][19], joint_pixelY[index][19])
+                        cv2.circle(npimg, nose_inference, 1, (0, 0, 0), thickness=2, lineType=1, shift=0)
+                        print("nose_inference: " + str(nose_inference))
+                        centers[19] = nose_inference
+                        nose_check = 2
+                    '''  Part Test
+                    if i==0:
+                        cv2.putText(npimg,"nose",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==1:
+                        cv2.putText(npimg,"neck",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==2:
+                        cv2.putText(npimg,"Rshoulder",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==3:
+                        cv2.putText(npimg,"RElbow",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==4:
+                        cv2.putText(npimg,"RWrist",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==5:
+                        cv2.putText(npimg,"LShoulder",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==6:
+                        cv2.putText(npimg,"LElbow",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==7:
+                        cv2.putText(npimg,"LWrist",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==8:
+                        cv2.putText(npimg,"RHip",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==9:
+                        cv2.putText(npimg,"RKnee",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==10:
+                        cv2.putText(npimg,"RAnkle",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==11:
+                        cv2.putText(npimg,"LHip",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==12:
+                        cv2.putText(npimg,"LKnee",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==13:
+                        cv2.putText(npimg,"LAnkle",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==14:
+                        cv2.putText(npimg,"REye",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==15:
+                        cv2.putText(npimg,"LEye",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==16:
+                        cv2.putText(npimg,"REar",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    if i==17:
+                        cv2.putText(npimg,"LEar",center,cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+                    '''
+                # print(common.CocoPairsRender)
+                # draw line
+                for pair_order, pair in enumerate(common.CocoPairsRender):
 
-    # temporary function for joint tracker  
+                    if pair[0] == 1 and pair[1] == 8:
+                        continue
+                    if pair[0] == 1 and pair[1] == 11:
+                        continue
+                    if pair[0] == 1 and pair[1] == 0:
+                        continue
+                    if pair[0] not in human.body_parts.keys() or pair[1] not in human.body_parts.keys() or pair[
+                        0] > 13 or pair[1] > 13:  # face remove
+                        continue
+                    # npimg = cv2.line(npimg, centers[pair[0]], centers[pair[1]],(0,255,255), 3)
+                    npimg = cv2.line(npimg, centers[pair[0]], centers[pair[1]],
+                                     (rgb[index][0], rgb[index][1], rgb[index][2]), 2)
+                if wrist_check == 2:
+                    # npimg = cv2.line(npimg, centers[pair[0]], wrist_inference,(0,255,255), 3)
+                    npimg = cv2.line(npimg, centers[1], centers[18],(rgb[index][0], rgb[index][1], rgb[index][2]), 2)
+                    wrist_check = 0
+                if nose_check == 2:
+                    npimg = cv2.line(npimg, centers[19], centers[1], (rgb[index][0], rgb[index][1], rgb[index][2]), 2)
+                    nose_check = 0
+
+        return npimg, checkPerson, trueHumanCount, joint_pixelX, joint_pixelY, human_match
+
+    # temporary function for joint tracker
     def joint_pointer(npimg, humans, imgcopy=False):
         if imgcopy:
             npimg = np.copy(npimg)
         image_h, image_w = npimg.shape[:2]
-        joint_pixelX = [[1] * 19 for j in range(12)] # values setup
-        joint_pixelY = [[1] * 19 for j in range(12)] # Because, None value -> error.
+        joint_pixelX = [[1] * 19 for j in range(12)]  # values setup
+        joint_pixelY = [[1] * 19 for j in range(12)]  # Because, None value -> error.
         centerX = 0
         centerY = 0
-        multi_people = 0 # Same value of humans.
-        
+        multi_people = 0  # Same value of humans.
+
+        checkPerson = np.ones(len(humans), dtype=bool)
+        k = -1
         for human in humans:
-            wrist_inference = (0,0)
-            for i in range(common.CocoPart.Background.value): # all image data range
-                if i not in human.body_parts.keys(): # body parts number
+            wrist_inference = (0, 0)
+            k += 1
+            # Ignore if less than 10 joints
+            if len(human.body_parts) < 10:
+                checkPerson[k] = 0
+                # print("continue")
+                continue
+            for i in range(common.CocoPart.Background.value):  # all image data range
+
+                if i not in human.body_parts.keys():  # body parts number
                     continue
-               
-                body_part = human.body_parts[i] # body parts number
-                centerX = int(body_part.x * image_w + 0.5) # jointpoint X axis
-                centerY = int(body_part.y * image_h + 0.5) # jointpoint Y axis
-                joint_pixelX[multi_people][i] = centerX # saving X axis
-                joint_pixelY[multi_people][i] = centerY # saving Y axis
+                body_part = human.body_parts[i]  # body parts number
+                centerX = int(body_part.x * image_w + 0.5)  # jointpoint X axis
+                centerY = int(body_part.y * image_h + 0.5)  # jointpoint Y axis
+                joint_pixelX[multi_people][i] = centerX  # saving X axis
+                joint_pixelY[multi_people][i] = centerY  # saving Y axis
 
                 if i == 8:
-                    wrist_inference = centerX,centerY
+                    wrist_inference = centerX, centerY
 
-                if wrist_inference != (0,0) and i == 11:
-                    joint_pixelX[multi_people][18],joint_pixelY[multi_people][18] = (int((wrist_inference[0] + centerX) / 2),int((wrist_inference[1] + centerY) / 2))
+                if wrist_inference != (0, 0) and i == 11:
+                    joint_pixelX[multi_people][18], joint_pixelY[multi_people][18] = (
+                    int((wrist_inference[0] + centerX) / 2), int((wrist_inference[1] + centerY) / 2))
             multi_people += 1
-         
-        return joint_pixelX, joint_pixelY # return values
 
-               
+        # print(checkPerson)
+
+        # count found people
+        # k = checkPerson.nonzero()
+        # print(np.shape(k)[1])
+        return joint_pixelX, joint_pixelY  # return values
+
     def _get_scaled_img(self, npimg, scale):
         get_base_scale = lambda s, w, h: max(self.target_size[0] / float(w), self.target_size[1] / float(h)) * s
         img_h, img_w = npimg.shape[:2]
@@ -454,7 +563,7 @@ class TfPoseEstimator:
             ratio_x = (1. - self.target_size[0] / float(npimg.shape[1])) / 2.0
             ratio_y = (1. - self.target_size[1] / float(npimg.shape[0])) / 2.0
             roi = self._crop_roi(npimg, ratio_x, ratio_y)
-            return [roi], [(ratio_x, ratio_y, 1.-ratio_x*2, 1.-ratio_y*2)]
+            return [roi], [(ratio_x, ratio_y, 1. - ratio_x * 2, 1. - ratio_y * 2)]
         elif isinstance(scale, tuple) and len(scale) == 2:
             # scaling with sliding window : (scale, step)
             base_scale = get_base_scale(scale[0], img_w, img_h)
@@ -493,16 +602,16 @@ class TfPoseEstimator:
     def _crop_roi(self, npimg, ratio_x, ratio_y):
         target_w, target_h = self.target_size
         h, w = npimg.shape[:2]
-        x = max(int(w*ratio_x-.5), 0)
-        y = max(int(h*ratio_y-.5), 0)
-        cropped = npimg[y:y+target_h, x:x+target_w]
+        x = max(int(w * ratio_x - .5), 0)
+        y = max(int(h * ratio_y - .5), 0)
+        cropped = npimg[y:y + target_h, x:x + target_w]
 
         cropped_h, cropped_w = cropped.shape[:2]
         if cropped_w < target_w or cropped_h < target_h:
             npblank = np.zeros((self.target_size[1], self.target_size[0], 3), dtype=np.uint8)
 
             copy_x, copy_y = (target_w - cropped_w) // 2, (target_h - cropped_h) // 2
-            npblank[copy_y:copy_y+cropped_h, copy_x:copy_x+cropped_w] = cropped
+            npblank[copy_y:copy_y + cropped_h, copy_x:copy_x + cropped_w] = cropped
         else:
             return cropped
 
@@ -537,14 +646,14 @@ class TfPoseEstimator:
         for info in infos:
             max_ratio_w = min(max_ratio_w, info[2])
             max_ratio_h = min(max_ratio_h, info[3])
-        mat_w, mat_h = int(output_w/max_ratio_w), int(output_h/max_ratio_h)
+        mat_w, mat_h = int(output_w / max_ratio_w), int(output_h / max_ratio_h)
         resized_heatMat = np.zeros((mat_h, mat_w, 19), dtype=np.float32)
         resized_pafMat = np.zeros((mat_h, mat_w, 38), dtype=np.float32)
         resized_cntMat = np.zeros((mat_h, mat_w, 1), dtype=np.float32)
         resized_cntMat += 1e-12
 
         for heatMat, pafMat, info in zip(heatMats, pafMats, infos):
-            w, h = int(info[2]*mat_w), int(info[3]*mat_h)
+            w, h = int(info[2] * mat_w), int(info[3] * mat_h)
             heatMat = cv2.resize(heatMat, (w, h))
             pafMat = cv2.resize(pafMat, (w, h))
             x, y = int(info[0] * mat_w), int(info[1] * mat_h)
@@ -552,12 +661,13 @@ class TfPoseEstimator:
             if TfPoseEstimator.ENSEMBLE == 'average':
                 # average
                 resized_heatMat[max(0, y):y + h, max(0, x):x + w, :] += heatMat[max(0, -y):, max(0, -x):, :]
-                resized_pafMat[max(0,y):y+h, max(0, x):x+w, :] += pafMat[max(0, -y):, max(0, -x):, :]
-                resized_cntMat[max(0,y):y+h, max(0, x):x+w, :] += 1
+                resized_pafMat[max(0, y):y + h, max(0, x):x + w, :] += pafMat[max(0, -y):, max(0, -x):, :]
+                resized_cntMat[max(0, y):y + h, max(0, x):x + w, :] += 1
             else:
                 # add up
-                resized_heatMat[max(0, y):y + h, max(0, x):x + w, :] = np.maximum(resized_heatMat[max(0, y):y + h, max(0, x):x + w, :], heatMat[max(0, -y):, max(0, -x):, :])
-                resized_pafMat[max(0,y):y+h, max(0, x):x+w, :] += pafMat[max(0, -y):, max(0, -x):, :]
+                resized_heatMat[max(0, y):y + h, max(0, x):x + w, :] = np.maximum(
+                    resized_heatMat[max(0, y):y + h, max(0, x):x + w, :], heatMat[max(0, -y):, max(0, -x):, :])
+                resized_pafMat[max(0, y):y + h, max(0, x):x + w, :] += pafMat[max(0, -y):, max(0, -x):, :]
                 resized_cntMat[max(0, y):y + h, max(0, x):x + w, :] += 1
 
         if TfPoseEstimator.ENSEMBLE == 'average':
