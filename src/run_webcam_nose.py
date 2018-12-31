@@ -627,12 +627,16 @@ def Deprojections(tempX, tempY, tempZ, i, humans, depth_intrin, depth_scale):
         # if humans[i] != None:
         temp = [1 for i in range(2)]  # for return value of axisY
         if tempX[i][j] != 1 and tempY[i][j] != 1 and tempZ[i][j] != 0:  # not int(1), axis X, Y
+
             temp[0] = tempX[i][j]
             temp[1] = tempY[i][j]
             point3d = rs.rs2_deproject_pixel_to_point(depth_intrin, temp, tempZ[i][j] * depth_scale)
+            # print("point3d[0]: " + str(round(point3d[0], 4)) + " point3d[1]: " + str(round(point3d[1], 4))+ " point3d[2]: " + str(round(point3d[2], 4)) + " j: " + str(j) + " i: "+ str(i))
+            # print(len(point3dX[0]))
             point3dX[i][j] = round(point3d[0], 4)
             point3dY[i][j] = round(point3d[1], 4)
             point3dZ[i][j] = round(point3d[2], 4)
+
     return point3dX, point3dY, point3dZ
 
 
@@ -741,6 +745,7 @@ def sendData2Unity(X, Y, Z, trueHumanCount):
     # npzero = np.zeros_like(Z[0])
     # if not all(npz == npzero):
         # print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4")
+
     for i in range(4):
         x_temp[i] = np.array(X[i])
         # print(x_temp[i,1])
@@ -1085,7 +1090,7 @@ if __name__ == '__main__':
                 # print(joint_pixelX)
 
                 image_rgb, checkPerson, trueHumanCount, joint_pixelX, joint_pixelY, human_match = TfPoseEstimator.draw_humans(
-                    image_rgb, humans, joint_pixelX, joint_pixelY, human_match, imgcopy=False)
+                    image_rgb, humans, joint_pixelX, joint_pixelY, imgcopy=False)
                 image_rgb = cv2.flip(image_rgb, 1)
 
                 # checkPerson: Determining valid person data
@@ -1152,9 +1157,9 @@ if __name__ == '__main__':
                     pts_count += 1
             if not humans:
                 image_rgb = image_rgb_noneHumans
-                point3dX = [[1 for i in range(19)] for j in range(4)]
-                point3dY = [[1 for i in range(19)] for j in range(4)]
-                point3dZ = [[0 for i in range(19)] for j in range(4)]
+                point3dX = [[1 for i in range(20)] for j in range(4)]
+                point3dY = [[1 for i in range(20)] for j in range(4)]
+                point3dZ = [[0 for i in range(20)] for j in range(4)]
 
             # Reset the coordinates
             human_mismatch_idx = np.where(human_match == 0)

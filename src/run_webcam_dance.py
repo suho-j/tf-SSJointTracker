@@ -810,19 +810,6 @@ if __name__ == '__main__':
     profile = pipeline.start(config)
     depth_sensor = profile.get_device().first_depth_sensor()
 
-    # rgb_sensor = profile.get_device()
-    # get depth sensor device info
-
-    # setup depth camera long range.
-    # if depth_sensor.supports(rs.option.brightness):
-    # brightness -64 ~ +64
-    # depth_sensor.set_option(rs.option.brightness, 0)
-    # depth_sensor.set_option(rs.option.laser_power, float(1))
-
-    #        depth_sensor.set_option(rs.option.visual_preset, float(1))
-    #        depth_sensor.set_option(rs.option.motion_range, float(65))
-    #        depth_sensor.set_option(rs.option.confidence_threshold, float(2))
-
     # can setup move the frame for color of depth
     align_to = rs.stream.color
     align = rs.align(align_to)
